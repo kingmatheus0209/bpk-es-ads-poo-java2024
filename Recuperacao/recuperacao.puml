@@ -1,0 +1,32 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+class Carro {
+    -Modelo:String
+    -ligado:Boolean
+
+    +AcianaAcelorador(): void
+    +AcionarFreio(): void
+    +TrocadeMarchar(): void
+    +LigarCarro(): void
+    +DesligarCarro(): void
+}
+
+class Motor{
+    -Modelo: String
+    -Ligado: Boolean
+    +Ligar(): void
+    +Desligar(): void
+    +AcelerarRpm(): void
+    +DesacelerarRpm(): void
+}
+  Carro "1*" o--  "1" Motor : - motor
+
+enum Potencia{
+    CV
+    HP
+}
+
+  Motor "1" *-  "1" Potencia : - potencia
+
+@enduml
