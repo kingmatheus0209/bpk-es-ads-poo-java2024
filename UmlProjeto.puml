@@ -1,0 +1,152 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+    class Transportadora {
+        -id: Integer
+        -razaoSocial: String
+        -cnpj: String
+        +cadastrarTransportadora()
+        +atualizar()
+        + validarCnpj():
+    }
+
+    class NotaTransportadora {
+        -id: Integer
+        -numero:String
+        -data:Date
+        +emitirNotaTransportadora()
+        +Cancelar()
+    }
+
+    class NotaMotorista {
+    -id: Integer
+    -numero: String
+    -data: Date
+    +emitirNotaMotorista()
+    +cancelar()
+    }
+
+    class Cliente {
+        -id: Integer
+        -nome: String
+        -dataNascimento: Date
+        -documento: String
+        - CPF: String
+        +cadastrarCliente()
+        +atualizar()
+        +validarCPF()
+    }
+
+    class Endereco {
+        -id: Integer
+        -logradouro: String
+        -numero: String
+        -cidade: String
+        -cep: String
+        +cadastrar()
+        +atualizar()
+    }
+
+ class Frete {
+        -id: Integer
+        -numero: String
+        -valor: Double
+        -status: String
+        -dataCriacao: Date
+        -dataPrevisaoEntrega: Date
+        -dataEntrega: Date
+        -distanciaKm: Double
+        +calcular()
+        +atualizar()
+        +iniciarTransporte()
+        +finalizarTransporte()
+        +calcularPrevisaoEntrega()
+        +gerarRelatorio()
+    }
+
+    class Caminhao {
+        -id: Integer
+        -placa: String
+        -modelo: String
+        -renavam: String
+        -chassi: String
+        -anoFabricacao: Integer
+        -anoModelo: Integer
+        -descricao: String
+        -capacidade: Double
+        +cadastrarCaminhao()
+        +atualizar()
+        +verificarDocumentacao()
+
+    }
+        enum TipoCaminhao {
+            VUC
+            TOCO
+            TRUCK
+            BITRUCK
+            CARRETA_SIMPLES
+            CARRETA_TRUCADA
+            RODOTREM
+            BITREM
+            VANDERLEIA
+            SIDER
+        }
+
+
+    class Motorista {
+        -id: Integer
+        -nome: String
+        -cnh: String
+        -telefone: String
+        -ValidadeCNH: Date
+        +cadastrarMotorista()
+        +atualizar()
+        +validarCNH()
+    }
+
+    class ProblemaCarga {
+           -id: Integer
+           -descricao: String
+           -dataProblema: Date
+           -tipoProblemaCarga: TipoProblema
+            -status: StatusProblema
+           -valorPrejuizo: Double
+           +registrar()
+           +resolver()
+           +calcularPrejuizo()
+           +RelatorioPrejuizo()
+    }
+
+    enum StatusFrete {
+        AGUARDANDO_COLETA
+        EM_TRANSPORTE
+        ENTREGUE
+        CANCELADO
+    }
+      enum StatusProblema {
+          ABERTO
+          EM_ANALISE
+          RESOLVIDO
+          CANCELADO
+    }
+     enum TipoProblema {
+          AVARIA
+          ATRASO
+          ROUBO
+          PERDA
+          EXPLODIU
+     }
+
+    Transportadora *-- NotaTransportadora
+    Frete *-- ProblemaCarga
+    ProblemaCarga *-- TipoProblema
+    ProblemaCarga *-- StatusProblema
+    Frete *-- StatusFrete
+    Caminhao *-- TipoCaminhao
+    Cliente *-- Frete
+
+
+    Frete o-- Motorista
+    Frete o-- Endereco
+    Motorista o-- Caminhao
+    NotaMotorista o-- Motorista
+@enduml
